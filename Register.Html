@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - King Casino</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #07111f;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: #132238;
+            padding: 30px;
+            width: 100%;
+            max-width: 430px;
+            border-radius: 15px;
+            border: 1px solid #263a55;
+        }
+
+        h1 {
+            text-align: center;
+            color: gold;
+        }
+
+        p {
+            color: #cbd5e1;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #07111f;
+            color: white;
+        }
+
+        .password-box {
+            display: flex;
+            gap: 8px;
+        }
+
+        .password-box input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .password-box button {
+            width: auto;
+            padding: 10px;
+            background: #263a55;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 13px;
+            background: gold;
+            color: #111;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .success {
+            display: block;
+            background: #123d2a;
+            color: #9df3c4;
+            border: 1px solid #26734d;
+        }
+
+        .error {
+            display: block;
+            background: #4b1d25;
+            color: #ffc4c4;
+            border: 1px solid #8e3644;
+        }
+
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .links a {
+            display: block;
+            margin-top: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>👑 King Casino</h1>
+    <p>Create your demo account</p>
+
+    <div id="message" class="message"></div>
+
+    <form id="registerForm">
+
+        <label for="username">Username</label>
+        <input type="text" id="username" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+
+        <label for="password">Password</label>
+        <div class="password-box">
+            <input type="password" id="password" required>
+            <button type="button" onclick="togglePassword('password', this)">
+                Show
+            </button>
+        </div>
+
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="password-box">
+            <input type="password" id="confirmPassword" required>
+            <button type="button" onclick="togglePassword('confirmPassword', this)">
+                Show
+            </button>
+        </div>
+
+        <button type="submit">Create Account</button>
+
+    </form>
+
+    <div class="links">
+        <a href="login.html">Already have an account? Login</a>
+        <a href="index.html">Back to Home</a>
+    </div>
+
+</div>
+
+<script>
+
+    const registerForm = document.getElementById("registerForm");
+    const messageBox = document.getElementById("message");
+
+    function showMessage(text, type) {
+        messageBox.textContent = text;
+        messageBox.className = "message " + type;
+    }
+
+    function togglePassword(id, button) {
+        const input = document.getElementById(id);
+
+        if (input.type === "password") {
+            input.type = "text";
+            button.textContent = "Hide";
+        } else {
+            input.type = "password";
+            button.textContent = "Show";
+        }
+    }
+
+    registerForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim().toLowerCase();
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        const savedEmail = localStorage.getItem("casinoEmail");
+
+        // Check if the email has already been registered
+        if (savedEmail && email === savedEmail.toLowerCase()) {
+            showMessage(
+                "This email is already registered. Please login.",
+                "error"
+            );
+            return;
+        }
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            showMessage(
+                "Your passwords do not match. Please try again.",
+                "error"
+            );
+            return;
+        }
+
+        // Save account details
+        localStorage.setItem("casinoUsername", username);
+        localStorage.setItem("casinoEmail", email);
+        localStorage.setItem("casinoPassword", password);
+
+        // New accounts start with zero balance
+        localStorage.setItem("casinoBalance", "0");
+
+        // Mark the player as logged in
+        localStorage.setItem("casinoLoggedIn", "true");
+
+        showMessage(
+            "Account created successfully! Welcome to King Casino.",
+            "success"
+        );
+
+        // Wait briefly so the success message can be seen
+        setTimeout(function() {
+            window.location.href = "dashboard.html";
+        }, 1500);
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Casino - Promotions & Support</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #07111f;
+    color: white;
+}
+
+header {
+    background: #151c30;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    color: #f4c542;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+nav button, .main-button {
+    background: #f4c542;
+    color: #07111f;
+    border: none;
+    padding: 11px 17px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+nav button:hover, .main-button:hover {
+    background: #d9a91d;
+}
+
+.container {
+    max-width: 1050px;
+    margin: 35px auto;
+    padding: 20px;
+}
+
+.section-title {
+    color: #f4c542;
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.intro {
+    color: #c4ccda;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.promo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #151c30;
+    border: 1px solid #293550;
+    border-radius: 10px;
+    padding: 22px;
+}
+
+.card h3 {
+    color: #f4c542;
+    margin-top: 0;
+}
+
+.card p {
+    color: #c4ccda;
+    line-height: 1.6;
+}
+
+.promo-icon {
+    font-size: 35px;
+    margin-bottom: 12px;
+}
+
+.-label {
+    display: inline-block;
+    background: #493b13;
+    color: #f4c542;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #293550;
+    margin: 45px 0;
+}
+
+.support-box {
+    background: #151c30;
+    border: 1px solid #293550;
+    border-radius: 10px;
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.faq {
+    background: #0b1527;
+    padding: 17px;
+    border-radius: 7px;
+    margin-bottom: 12px;
+}
+
+.faq h3 {
+    color: #f4c542;
+    margin-top: 0;
+}
+
+.faq p {
+    color: #c4ccda;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    color: #f4c542;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #293550;
+    border-radius: 6px;
+    background: #0b1527;
+    color: white;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+#messageStatus {
+    color: #f4c542;
+    margin-top: 15px;
+    line-height: 1.5;
+}
+
+footer {
+    text-align: center;
+    color: #8994aa;
+    padding: 25px;
+}
+
+@media(max-width: 600px) {
+    header {
+        justify-content: center;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .container {
+        margin: 15px auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">👑 KING CASINO</div>
+
+    <nav>
+        <button onclick="location.href='dashboard.html'">Dashboard</button>
+        <button onclick="location.href='games.html'">Games</button>
+        <button onclick="location.href='transactions.html'">Transactions</button>
+    </nav>
+</header>
+
+<div class="container">
+
+    <!-- PROMOTIONS SECTION -->
+
+    <section id="promotions">
+
+        <h1 class="section-title">🎁 Promotions & Special Events</h1>
+
+        <p class="intro">
+            Welcome to King Casino Promotions! Explore our latest
+            announcements and demonstration events.
+        </p>
+
+        <div class="promo-grid">
+
+            <div class="card">
+                <div class="promo-icon">🎮</div>
+                <h3>Game Explorer Event</h3>
+                <p>
+                    Discover the different games available in our
+                    demonstration lobby and explore their features.
+                </p>
+                <span class="-label"> EVENT</span>
+            </div>
+
+            <div class="card">
+                <div class="promo-icon">🏆</div>
+                <h3>Player Challenge</h3>
+                <p>
+                    Challenge yourself with our non-wagering game
+                    simulations and enjoy testing your skills.
+                </p>
+                <span class="-label">FOR ENTERTAINMENT</span>
+            </div>
+
+            <div class="card">
+                <div class="promo-icon">⭐</div>
+                <h3>Welcome to King Casino</h3>
+                <p>
+                    New to the platform? Explore your dashboard,
+                    profile and available demonstration games.
+                </p>
+                <span class="-label">WELCOME</span>
+            </div>
+
+        </div>
+
+        <p class="intro" style="margin-top:20px;">
+            All events shown here are informational demonstrations.
+            No real-money rewards, deposits or withdrawals are offered.
+        </p>
+
+    </section>
+
+    <hr class="divider">
+
+    <!-- SUPPORT SECTION -->
+
+    <section id="support">
+
+        <h1 class="section-title">🎧 Customer Support</h1>
+
+        <p class="intro">
+            Need help navigating King Casino? Check the frequently
+            asked questions below.
+        </p>
+
+        <div class="support-box">
+
+            <div class="faq">
+                <h3>1. How do I create an account?</h3>
+                <p>
+                    Open the Register page, enter your details and
+                    follow the instructions displayed on the screen.
+                </p>
+            </div>
+
+            <div class="faq">
+                <h3>2. How do I access the games?</h3>
+                <p>
+                    Open your Dashboard and select Games to explore
+                    the available demonstrations.
+                </p>
+            </div>
+
+            <div class="faq">
+                <h3>3. Why is payment unavailable?</h3>
+                <p>
+                    This website is currently a demonstration.
+                    Real payment processing has not been connected.
+                </p>
+            </div>
+
+            <div class="faq">
+                <h3>4. Where can I see my account information?</h3>
+                <p>
+                    Visit your Profile page to view your demonstration
+                    account information.
+                </p>
+            </div>
+
+            <div class="faq">
+                <h3>5. Where can I see my activity?</h3>
+                <p>
+                    Visit the Transactions page to view any
+                    demonstration activity recorded by the website.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="support-box">
+
+            <h2 class="section-title">Contact Support</h2>
+
+            <p class="intro">
+                You can prepare a support message here. This demo form
+                does not send or store messages.
+            </p>
+
+            <form id="supportForm">
+
+                <label for="name">Your Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label for="subject">Subject</label>
+                <input
+                    type="text"
+                    id="subject"
+                    placeholder="What do you need help with?"
+                    required
+                >
+
+                <label for="message">Your Message</label>
+                <textarea
+                    id="message"
+                    placeholder="Write your message here..."
+                    required
+                ></textarea>
+
+                <button type="submit" class="main-button">
+                    Prepare Message
+                </button>
+
+                <p id="messageStatus"></p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
+
+<footer>
+    &copy; 2026 King Casino. website.
+</footer>
+
+<script>
+document.getElementById("supportForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    document.getElementById("messageStatus").textContent =
+        "Your message has been prepared for  Contact support delivery will be added when a backend is connected.";
+});
+</script>
+
+</body>
+</html>

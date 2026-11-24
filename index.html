@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realistic King Casino</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #07111f;
+            color: white;
+        }
+
+        header {
+            background: #101d30;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h1 {
+            color: gold;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            background: #263a55;
+            padding: 10px 16px;
+            border-radius: 8px;
+        }
+
+        nav a:hover {
+            background: #b8860b;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 65px 20px 45px;
+            background: linear-gradient(135deg, #101d30, #172b45);
+        }
+
+        .hero h2 {
+            color: gold;
+            font-size: 38px;
+        }
+
+        .hero p {
+            color: #cbd5e1;
+            font-size: 17px;
+        }
+
+        .hero-buttons {
+            margin-top: 25px;
+        }
+
+        .hero-buttons a {
+            display: inline-block;
+            padding: 13px 24px;
+            margin: 8px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-btn {
+            background: gold;
+            color: #111;
+        }
+
+        .login-btn {
+            background: #263a55;
+            color: white;
+        }
+
+        .games-section {
+            padding: 35px 20px 60px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .games-section h2 {
+            text-align: center;
+            color: gold;
+            margin-bottom: 30px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+        }
+
+        .game-card {
+            background: #132238;
+            border: 1px solid #263a55;
+            border-radius: 14px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: gold;
+        }
+
+        .game-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .game-card h3 {
+            color: gold;
+            margin: 10px 0;
+        }
+
+        .game-card p {
+            color: #cbd5e1;
+            min-height: 40px;
+        }
+
+        .game-card button {
+            background: gold;
+            color: #111;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .game-card button:hover {
+            background: #e5b800;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #101d30;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                justify-content: center;
+                text-align: center;
+            }
+
+            .hero h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>REALISTIC 👑 King Casino</h1>
+
+    <nav id="navigation">
+        <a href="index.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Welcome to King Casino</h2>
+
+    <p>Explore your favourite casino games in our gaming lobby.</p>
+
+    <div class="hero-buttons" id="heroButtons">
+        <a href="register.html" class="register-btn">Create Account</a>
+        <a href="login.html" class="login-btn">Login</a>
+    </div>
+</section>
+
+<section class="games-section">
+
+    <h2>Explore Our Games</h2>
+
+    <div class="games-grid">
+
+        <div class="game-card">
+            <div class="game-icon">🎰</div>
+            <h3>Slot Machine</h3>
+            <p>Spin and enjoy our slot game.</p>
+            <button onclick="selectGame('Slot Machine', 'slots.html')">
+                Play Slots
+            </button>
+        </div>
+
+        <div class="game-card">
+            <div class="game-icon">🎡</div>
+            <h3>Roulette</h3>
+            <p>Try your luck with the roulette wheel.</p>
+            <button onclick="selectGame('Roulette', 'roulette.html')">
+                Explore
+            </button>
+        </div>
+
+        <div class="game-card">
+            <div class="game-icon">🃏</div>
+            <h3>Blackjack</h3>
+            <p>Enjoy the classic blackjack card game.</p>
+            <button onclick="selectGame('Blackjack', 'blackjack.html')">
+                Explore
+            </button>
+        </div>
+
+        <div class="game-card">
+            <div class="game-icon">♠️</div>
+            <h3>Poker</h3>
+            <p>Discover our poker game.</p>
+            <button onclick="selectGame('Poker', 'poker.html')">
+                Explore
+            </button>
+        </div>
+
+        <div class="game-card">
+            <div class="game-icon">🥂</div>
+            <h3>Baccarat</h3>
+            <p>Explore the baccarat table.</p>
+            <button onclick="selectGame('Baccarat', 'baccarat.html')">
+                Explore
+            </button>
+        </div>
+
+        <div class="game-card">
+            <div class="game-icon">🎲</div>
+            <h3>Craps</h3>
+            <p>Discover our dice game.</p>
+            <button onclick="selectGame('Craps', 'craps.html')">
+                Explore
+            </button>
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    <p>&copy; 2026 Realistic King Casino. Gaming website.</p>
+    <p>Manily Credits Only.  Gamble Responsibly .</p>
+</footer>
+
+<script>
+
+    // Update the homepage buttons if the player is logged in
+    function updateNavigation() {
+
+        const loggedIn = localStorage.getItem("casinoLoggedIn") === "true";
+
+        const navigation = document.getElementById("navigation");
+        const heroButtons = document.getElementById("heroButtons");
+
+        if (loggedIn) {
+
+            navigation.innerHTML = `
+                <a href="index.html">Home</a>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="games.html">Games</a>
+            `;
+
+            heroButtons.innerHTML = `
+                <a href="dashboard.html" class="register-btn">
+                    Go to Dashboard
+                </a>
+                <a href="games.html" class="login-btn">
+                    View Games
+                </a>
+            `;
+
+        }
+    }
+
+    // Save the selected game and direct the visitor
+    function selectGame(gameName, gamePath) {
+
+        localStorage.setItem("selectedGame", gameName);
+        localStorage.setItem("selectedGamePath", gamePath);
+
+        const loggedIn = localStorage.getItem("casinoLoggedIn") === "true";
+
+        if (loggedIn) {
+            window.location.href = "dashboard.html";
+        } else {
+            window.location.href = "login.html";
+        }
+    }
+
+    // Run when the homepage loads
+    updateNavigation();
+
+</script>
+
+</body>
+</html>

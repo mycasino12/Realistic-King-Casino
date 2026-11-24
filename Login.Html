@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - King Casino</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #07111f;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: #132238;
+            padding: 30px;
+            width: 100%;
+            max-width: 430px;
+            border-radius: 15px;
+            border: 1px solid #263a55;
+        }
+
+        h1 {
+            text-align: center;
+            color: gold;
+        }
+
+        p {
+            color: #cbd5e1;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            background: #07111f;
+            color: white;
+        }
+
+        .password-box {
+            display: flex;
+            gap: 8px;
+        }
+
+        .password-box input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .password-box button {
+            width: auto;
+            padding: 10px;
+            background: #263a55;
+            color: white;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 13px;
+            background: gold;
+            color: #111;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .message {
+            display: none;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .success {
+            display: block;
+            background: #123d2a;
+            color: #9df3c4;
+            border: 1px solid #26734d;
+        }
+
+        .error {
+            display: block;
+            background: #4b1d25;
+            color: #ffc4c4;
+            border: 1px solid #8e3644;
+        }
+
+        .links {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .links a {
+            display: block;
+            margin-top: 12px;
+        }
+
+        .forgot-link {
+            display: block;
+            text-align: right;
+            margin-top: 12px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>👑 King Casino</h1>
+
+    <!-- LOGIN SECTION -->
+
+    <div id="loginSection">
+
+        <p>Login to your account</p>
+
+        <div id="loginMessage" class="message"></div>
+
+        <form id="loginForm">
+
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" required>
+
+            <label for="loginPassword">Password</label>
+
+            <div class="password-box">
+                <input type="password" id="loginPassword" required>
+
+                <button type="button"
+                    onclick="togglePassword('loginPassword', this)">
+                    Show
+                </button>
+            </div>
+
+            <a href="#" class="forgot-link" onclick="showForgotPassword(); return false;">
+                Forgot Password?
+            </a>
+
+            <button type="submit">Login</button>
+
+        </form>
+
+        <div class="links">
+            <a href="register.html">Don't have an account? Register</a>
+            <a href="index.html">Back to Home</a>
+        </div>
+
+    </div>
+
+
+    <!-- FORGOT PASSWORD SECTION -->
+
+    <div id="forgotSection" class="hidden">
+
+        <p>Reset your demo password</p>
+
+        <div id="resetMessage" class="message"></div>
+
+        <form id="resetForm">
+
+            <label for="resetEmail">Registered Email</label>
+            <input type="email" id="resetEmail" required>
+
+            <label for="newPassword">New Password</label>
+
+            <div class="password-box">
+                <input type="password" id="newPassword" required>
+
+                <button type="button"
+                    onclick="togglePassword('newPassword', this)">
+                    Show
+                </button>
+            </div>
+
+            <label for="confirmNewPassword">Confirm New Password</label>
+
+            <div class="password-box">
+                <input type="password" id="confirmNewPassword" required>
+
+                <button type="button"
+                    onclick="togglePassword('confirmNewPassword', this)">
+                    Show
+                </button>
+            </div>
+
+            <button type="submit">Reset Password</button>
+
+        </form>
+
+        <div class="links">
+            <a href="#" onclick="showLogin(); return false;">
+                Back to Login
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    const loginForm = document.getElementById("loginForm");
+    const resetForm = document.getElementById("resetForm");
+
+    const loginMessage = document.getElementById("loginMessage");
+    const resetMessage = document.getElementById("resetMessage");
+
+    function showMessage(box, text, type) {
+        box.textContent = text;
+        box.className = "message " + type;
+    }
+
+    function togglePassword(id, button) {
+        const input = document.getElementById(id);
+
+        if (input.type === "password") {
+            input.type = "text";
+            button.textContent = "Hide";
+        } else {
+            input.type = "password";
+            button.textContent = "Show";
+        }
+    }
+
+    // Show the login section
+    function showLogin() {
+        document.getElementById("loginSection").classList.remove("hidden");
+        document.getElementById("forgotSection").classList.add("hidden");
+    }
+
+    // Show the password reset section
+    function showForgotPassword() {
+        document.getElementById("loginSection").classList.add("hidden");
+        document.getElementById("forgotSection").classList.remove("hidden");
+
+        document.getElementById("resetEmail").value =
+            document.getElementById("loginEmail").value;
+    }
+
+    // LOGIN CHECK
+    loginForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+        const password = document.getElementById("loginPassword").value;
+
+        const savedEmail = localStorage.getItem("casinoEmail");
+        const savedPassword = localStorage.getItem("casinoPassword");
+
+        // Check if an account exists
+        if (!savedEmail || email !== savedEmail.toLowerCase()) {
+
+            showMessage(
+                loginMessage,
+                "Email not found. Please create an account.",
+                "error"
+            );
+
+            return;
+        }
+
+        // Check the password
+        if (password !== savedPassword) {
+
+            showMessage(
+                loginMessage,
+                "Incorrect password. Please try again.",
+                "error"
+            );
+
+            return;
+        }
+
+        // Successful login
+        localStorage.setItem("casinoLoggedIn", "true");
+
+        showMessage(
+            loginMessage,
+            "Login successful! Welcome back.",
+            "success"
+        );
+
+        setTimeout(function() {
+            window.location.href = "dashboard.html";
+        }, 1500);
+
+    });
+
+
+    // PASSWORD RESET
+    resetForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("resetEmail").value.trim().toLowerCase();
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmNewPassword = document.getElementById("confirmNewPassword").value;
+
+        const savedEmail = localStorage.getItem("casinoEmail");
+
+        // Check whether the email exists
+        if (!savedEmail || email !== savedEmail.toLowerCase()) {
+
+            showMessage(
+                resetMessage,
+                "Email not found. Please check your email.",
+                "error"
+            );
+
+            return;
+        }
+
+        // Check whether the new passwords match
+        if (newPassword !== confirmNewPassword) {
+
+            showMessage(
+                resetMessage,
+                "Your new passwords do not match.",
+                "error"
+            );
+
+            return;
+        }
+
+        // Save the new demo password
+        localStorage.setItem("casinoPassword", newPassword);
+
+        showMessage(
+            resetMessage,
+            "Password changed successfully! You can now login.",
+            "success"
+        );
+
+        resetForm.reset();
+
+        setTimeout(function() {
+            showLogin();
+            document.getElementById("loginEmail").value = email;
+        }, 2000);
+
+    });
+
+</script>
+
+</body>
+</html>

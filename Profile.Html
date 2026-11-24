@@ -1,0 +1,336 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Profile - King Casino</title>
+
+<style>
+*{
+ box-sizing:border-box;
+}
+
+body{
+ margin:0;
+ background:#07111f;
+ color:white;
+ font-family:Arial,sans-serif;
+}
+
+header{
+ background:#132238;
+ padding:20px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:12px;
+}
+
+.logo{
+ color:gold;
+ font-size:23px;
+ font-weight:bold;
+}
+
+nav a{
+ color:white;
+ text-decoration:none;
+ margin:8px;
+}
+
+nav a:hover{
+ color:gold;
+}
+
+.container{
+ max-width:850px;
+ margin:35px auto;
+ padding:20px;
+}
+
+h1{
+ text-align:center;
+ color:gold;
+}
+
+.intro{
+ text-align:center;
+ color:#cbd5e1;
+}
+
+.profile-card{
+ background:#132238;
+ border:1px solid #263a55;
+ border-radius:15px;
+ padding:30px;
+ margin-top:25px;
+}
+
+.avatar{
+ width:100px;
+ height:100px;
+ border-radius:50%;
+ background:#263a55;
+ border:3px solid gold;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ font-size:50px;
+ margin:0 auto 15px;
+}
+
+.username{
+ text-align:center;
+ color:gold;
+ font-size:25px;
+ font-weight:bold;
+}
+
+.account-status{
+ text-align:center;
+ color:#4ade80;
+ margin-bottom:25px;
+}
+
+.info{
+ background:#07111f;
+ padding:16px;
+ border-radius:9px;
+ margin-top:15px;
+}
+
+.info label{
+ color:#94a3b8;
+ font-size:13px;
+ display:block;
+ margin-bottom:7px;
+}
+
+.info p{
+ margin:0;
+ font-size:16px;
+ overflow-wrap:anywhere;
+}
+
+.buttons{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:12px;
+ margin-top:25px;
+}
+
+button{
+ padding:13px;
+ border:0;
+ border-radius:8px;
+ background:gold;
+ color:#111;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+button:hover{
+ background:#ffe17b;
+}
+
+.logout{
+ background:#b91c1c;
+ color:white;
+}
+
+.logout:hover{
+ background:#dc2626;
+}
+
+.message{
+ display:none;
+ background:#4b1d25;
+ color:#ffc4c4;
+ border:1px solid #8e3644;
+ border-radius:9px;
+ padding:15px;
+ text-align:center;
+ margin-top:20px;
+}
+
+footer{
+ text-align:center;
+ color:#94a3b8;
+ padding:25px;
+}
+
+@media(max-width:600px){
+ header{
+  justify-content:center;
+  text-align:center;
+ }
+
+ nav{
+  width:100%;
+  text-align:center;
+ }
+
+ .container{
+  margin:15px auto;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+ <div class="logo">👑 KING CASINO</div>
+
+ <nav>
+  <a href="index.html">Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="games.html">Games</a>
+ </nav>
+
+</header>
+
+<div class="container">
+
+ <h1>👤 My Profile</h1>
+
+ <p class="intro">
+  View your account information.
+ </p>
+
+ <div class="profile-card">
+
+  <div class="avatar">👤</div>
+
+  <div class="username" id="profileName">
+   Loading...
+  </div>
+
+  <div class="account-status" id="accountStatus">
+    Account
+  </div>
+
+  <div class="info">
+   <label>Username</label>
+   <p id="username">Loading...</p>
+  </div>
+
+  <div class="info">
+   <label>Email Address</label>
+   <p id="email">Loading...</p>
+  </div>
+
+  <div class="info">
+   <label>Account Type</label>
+   <p>Main Account</p>
+  </div>
+
+  <div class="info">
+   <label>Account Status</label>
+   <p>Active Account</p>
+  </div>
+
+  <div class="buttons">
+
+   <button onclick="goDashboard()">
+    Dashboard
+   </button>
+
+   <button onclick="goGames()">
+    Games Lobby
+   </button>
+
+   <button class="logout" onclick="logout()">
+    Logout
+   </button>
+
+  </div>
+
+  <div class="message" id="message"></div>
+
+ </div>
+
+</div>
+
+<footer>
+ King Casino — My Profile
+</footer>
+
+<script>
+
+// GET REGISTERED USER INFORMATION
+
+const savedUsername =
+ localStorage.getItem("casinoUsername");
+
+const savedEmail =
+ localStorage.getItem("casinoEmail");
+
+const loggedIn =
+ localStorage.getItem("casinoLoggedIn");
+
+// DISPLAY USER INFORMATION
+
+if(savedUsername && savedEmail){
+
+ document.getElementById("profileName").textContent =
+  savedUsername;
+
+ document.getElementById("username").textContent =
+  savedUsername;
+
+ document.getElementById("email").textContent =
+  savedEmail;
+
+}else{
+
+ document.getElementById("profileName").textContent =
+  "No Account Found";
+
+ document.getElementById("username").textContent =
+  "Not available";
+
+ document.getElementById("email").textContent =
+  "Not available";
+
+ document.getElementById("accountStatus").textContent =
+  "Please register or login";
+
+}
+
+// DASHBOARD
+
+function goDashboard(){
+ window.location.href = "dashboard.html";
+}
+
+// GAMES
+
+function goGames(){
+ window.location.href = "games.html";
+}
+
+// LOGOUT
+
+function logout(){
+
+ localStorage.setItem("casinoLoggedIn","false");
+
+ document.getElementById("message").style.display = "block";
+
+ document.getElementById("message").textContent =
+  "You have logged out successfully.";
+
+ setTimeout(function(){
+  window.location.href = "login.html";
+ },1500);
+
+}
+
+</script>
+
+</body>
+</html>

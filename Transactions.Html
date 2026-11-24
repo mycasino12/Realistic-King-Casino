@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transactions - King Casino</title>
+
+<style>
+*{
+ box-sizing:border-box;
+}
+
+body{
+ margin:0;
+ background:#07111f;
+ color:white;
+ font-family:Arial,sans-serif;
+}
+
+header{
+ background:#132238;
+ padding:20px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:12px;
+}
+
+.logo{
+ color:gold;
+ font-size:23px;
+ font-weight:bold;
+}
+
+nav a{
+ color:white;
+ text-decoration:none;
+ margin:8px;
+}
+
+nav a:hover{
+ color:gold;
+}
+
+.container{
+ max-width:1000px;
+ margin:auto;
+ padding:25px;
+}
+
+h1{
+ color:gold;
+ text-align:center;
+}
+
+.intro{
+ color:#cbd5e1;
+ text-align:center;
+ line-height:1.6;
+}
+
+.account-box{
+ background:#132238;
+ border:1px solid #263a55;
+ border-radius:12px;
+ padding:20px;
+ margin-top:25px;
+}
+
+.account-box h2{
+ color:gold;
+ margin-top:0;
+}
+
+.account-box p{
+ color:#cbd5e1;
+ line-height:1.6;
+}
+
+.history-box{
+ background:#132238;
+ border:1px solid #263a55;
+ border-radius:12px;
+ padding:20px;
+ margin-top:25px;
+}
+
+.history-box h2{
+ color:gold;
+}
+
+.table-wrapper{
+ overflow-x:auto;
+}
+
+table{
+ width:100%;
+ border-collapse:collapse;
+ min-width:550px;
+}
+
+th,td{
+ padding:15px;
+ text-align:left;
+ border-bottom:1px solid #334155;
+}
+
+th{
+ color:gold;
+}
+
+td{
+ color:#e2e8f0;
+}
+
+.status{
+ color:#4ade80;
+ font-weight:bold;
+}
+
+.empty{
+ text-align:center;
+ padding:35px 15px;
+ color:#94a3b8;
+ line-height:1.7;
+}
+
+.empty-icon{
+ font-size:45px;
+}
+
+.buttons{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+ gap:12px;
+ margin-top:25px;
+}
+
+button{
+ padding:13px;
+ border:0;
+ border-radius:8px;
+ background:gold;
+ color:#111;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+button:hover{
+ background:#ffe17b;
+}
+
+footer{
+ text-align:center;
+ padding:25px;
+ color:#94a3b8;
+}
+
+@media(max-width:600px){
+ header{
+  justify-content:center;
+  text-align:center;
+ }
+
+ nav{
+  width:100%;
+  text-align:center;
+ }
+
+ .container{
+  padding:18px;
+ }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+ <div class="logo">👑 KING CASINO</div>
+
+ <nav>
+  <a href="index.html">Home</a>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="games.html">Games</a>
+ </nav>
+
+</header>
+
+<div class="container">
+
+ <h1>📋 Transaction History</h1>
+
+ <p class="intro">
+  View your account activity and history.
+ </p>
+
+ <!-- ACCOUNT INFORMATION -->
+
+ <div class="account-box">
+
+  <h2>👤 Account Information</h2>
+
+  <p>
+   Username:
+   <strong id="username">Loading...</strong>
+  </p>
+
+  <p>
+   Email:
+   <strong id="email">Loading...</strong>
+  </p>
+
+  <p>
+   Account Type:
+   <strong>Account</strong>
+  </p>
+
+ </div>
+
+ <!-- ACTIVITY HISTORY -->
+
+ <div class="history-box">
+
+  <h2>Recent Activity</h2>
+
+  <div class="table-wrapper">
+
+   <table>
+
+    <thead>
+     <tr>
+      <th>Date</th>
+      <th>Activity</th>
+      <th>Description</th>
+      <th>Status</th>
+     </tr>
+    </thead>
+
+    <tbody id="activityList">
+    </tbody>
+
+   </table>
+
+  </div>
+
+  <div class="empty" id="emptyMessage">
+   <div class="empty-icon">📭</div>
+   <h3>No Activity Yet</h3>
+   <p>
+    Your activity will appear here when records
+    are available.
+   </p>
+  </div>
+
+ </div>
+
+ <!-- NAVIGATION -->
+
+ <div class="buttons">
+
+  <button onclick="goDashboard()">
+   Dashboard
+  </button>
+
+  <button onclick="goGames()">
+   Games Lobby
+  </button>
+
+  <button onclick="goProfile()">
+   My Profile
+  </button>
+
+ </div>
+
+</div>
+
+<footer>
+ King Casino — Activity History
+</footer>
+
+<script>
+
+// LOAD ACCOUNT INFORMATION
+
+const username =
+ localStorage.getItem("casinoUsername");
+
+const email =
+ localStorage.getItem("casinoEmail");
+
+document.getElementById("username").textContent =
+ username || "Not available";
+
+document.getElementById("email").textContent =
+ email || "Not available";
+
+
+// LOAD ACTIVITY
+
+function loadActivity(){
+
+ const activityList =
+  document.getElementById("activityList");
+
+ const emptyMessage =
+  document.getElementById("emptyMessage");
+
+ activityList.innerHTML = "";
+
+ let activities = [];
+
+ try{
+  activities = JSON.parse(
+   localStorage.getItem("casinoDemoActivity") || "[]"
+  );
+
+  if(!Array.isArray(activities)){
+   activities = [];
+  }
+
+ }catch(error){
+  activities = [];
+ }
+
+ if(activities.length === 0){
+
+  emptyMessage.style.display = "block";
+  return;
+
+ }
+
+ emptyMessage.style.display = "none";
+
+ activities.slice().reverse().forEach(function(item){
+
+  const row = document.createElement("tr");
+
+  const dateCell = document.createElement("td");
+  const activityCell = document.createElement("td");
+  const descriptionCell = document.createElement("td");
+  const statusCell = document.createElement("td");
+
+  dateCell.textContent = item.date || "Not available";
+  activityCell.textContent = item.activity || "Demo activity";
+  descriptionCell.textContent = item.description || "Demo record";
+  statusCell.textContent = item.status || "Recorded";
+
+  statusCell.className = "status";
+
+  row.appendChild(dateCell);
+  row.appendChild(activityCell);
+  row.appendChild(descriptionCell);
+  row.appendChild(statusCell);
+
+  activityList.appendChild(row);
+
+ });
+
+}
+
+loadActivity();
+
+
+// NAVIGATION
+
+function goDashboard(){
+ window.location.href = "dashboard.html";
+}
+
+function goGames(){
+ window.location.href = "games.html";
+}
+
+function goProfile(){
+ window.location.href = "profile.html";
+}
+
+</script>
+
+</body>
+</html>

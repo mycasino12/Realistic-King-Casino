@@ -1,0 +1,256 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Casino - Slots</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #0b1020;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    color: #f4c542;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 8px;
+}
+
+nav a:hover {
+    color: #f4c542;
+}
+
+.container {
+    max-width: 750px;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+    color: #f4c542;
+}
+
+.box {
+    background: #151c30;
+    padding: 25px;
+    border-radius: 18px;
+    border: 1px solid #343d59;
+}
+
+.reels {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.reel {
+    background: white;
+    color: black;
+    border: 5px solid #f4c542;
+    border-radius: 12px;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 55px;
+}
+
+.controls {
+    text-align: center;
+}
+
+button {
+    background: #f4c542;
+    color: #111;
+    padding: 14px 20px;
+    border: 0;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 8px;
+}
+
+button:hover {
+    background: #ffe17b;
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.message {
+    text-align: center;
+    min-height: 50px;
+    margin-top: 20px;
+    color: #f4c542;
+    font-weight: bold;
+}
+
+a {
+    color: #f4c542;
+}
+
+@media(max-width:450px) {
+    .reel {
+        width: 85px;
+        height: 90px;
+        font-size: 42px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">👑 KING CASINO</div>
+
+<nav>
+<a href="dashboard.html">Dashboard</a>
+<a href="games.html">Games</a>
+</nav>
+</header>
+
+<div class="container">
+
+<h1>🎰 Slot Machine</h1>
+
+<div class="box">
+
+<div class="reels">
+
+<div class="reel" id="r1">🍒</div>
+<div class="reel" id="r2">🍋</div>
+<div class="reel" id="r3">🍇</div>
+
+</div>
+
+<div class="controls">
+
+<button id="spin" onclick="spin()">SPIN</button>
+
+</div>
+
+<div class="message" id="message">
+Press Spin to play.
+</div>
+
+<p style="text-align:center">
+<a href="games.html">Return to Games Lobby</a>
+</p>
+
+<p style="text-align:center">
+<a href="dashboard.html">Return to Dashboard</a>
+</p>
+
+</div>
+</div>
+
+<script>
+
+const symbols = ["🍒","🍋","🍇","🍊","⭐","💎","7️⃣"];
+
+let spinning = false;
+
+function spin() {
+
+    if (spinning) return;
+
+    spinning = true;
+
+    const button = document.getElementById("spin");
+
+    button.disabled = true;
+
+    document.getElementById("message").textContent =
+        "Spinning...";
+
+    let count = 0;
+
+    let animation = setInterval(function() {
+
+        document.getElementById("r1").textContent = randomSymbol();
+        document.getElementById("r2").textContent = randomSymbol();
+        document.getElementById("r3").textContent = randomSymbol();
+
+        count++;
+
+        if (count >= 15) {
+
+            clearInterval(animation);
+
+            let a = randomSymbol();
+            let b = randomSymbol();
+            let c = randomSymbol();
+
+            document.getElementById("r1").textContent = a;
+            document.getElementById("r2").textContent = b;
+            document.getElementById("r3").textContent = c;
+
+            showResult(a,b,c);
+
+            spinning = false;
+
+            button.disabled = false;
+        }
+
+    }, 100);
+}
+
+function randomSymbol() {
+
+    return symbols[Math.floor(Math.random() * symbols.length)];
+}
+
+function showResult(a,b,c) {
+
+    const message = document.getElementById("message");
+
+    if (a === b && b === c) {
+
+        message.textContent =
+            "🎉 THREE MATCHING SYMBOLS! Amazing spin!";
+
+    } else if (a === b || a === c || b === c) {
+
+        message.textContent =
+            "✨ TWO MATCHING SYMBOLS! Nice spin!";
+
+    } else {
+
+        message.textContent =
+            "Try another spin!";
+    }
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,303 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Casino - Craps</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #0b1020;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+header {
+    background: #151c30;
+    padding: 20px;
+    border-bottom: 2px solid gold;
+}
+
+.logo {
+    color: #f4c542;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 750px;
+    margin: 25px auto;
+    padding: 20px;
+}
+
+.box {
+    background: #151c30;
+    padding: 22px;
+    border-radius: 15px;
+    border: 1px solid #343d59;
+    margin-bottom: 20px;
+}
+
+.table {
+    background: #075b38;
+    padding: 30px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.dice {
+    font-size: 65px;
+    margin: 15px;
+}
+
+button {
+    background: #f4c542;
+    color: #111;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 8px;
+}
+
+button:hover {
+    background: #ffe17b;
+}
+
+select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 0;
+    margin: 8px;
+    width: 90%;
+    max-width: 300px;
+}
+
+#result {
+    font-size: 19px;
+    font-weight: bold;
+    margin: 20px;
+    color: gold;
+    min-height: 35px;
+}
+
+a {
+    color: #f4c542;
+    margin: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">👑 KING CASINO - CRAPS</div>
+</header>
+
+<div class="container">
+
+<div class="box">
+
+<h2>🎲 Craps Table</h2>
+
+<p>Choose a game mode and roll the dice!</p>
+
+<select id="choice">
+    <option value="pass">Pass Line</option>
+    <option value="dontpass">Don't Pass</option>
+</select>
+
+<br>
+
+<button onclick="rollDice()">ROLL DICE</button>
+
+<div class="table">
+
+<div class="dice" id="dice">🎲 🎲</div>
+
+<h2 id="total">Total: -</h2>
+
+<p id="pointDisplay">Point: -</p>
+
+</div>
+
+<div id="result">
+Ready to roll!
+</div>
+
+<button onclick="resetGame()">NEW ROUND</button>
+
+</div>
+
+<div class="box">
+
+<button onclick="location.href='dashboard.html'">
+DASHBOARD
+</button>
+
+<button onclick="location.href='games.html'">
+GAMES LOBBY
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let point = null;
+let roundActive = false;
+let currentChoice = "pass";
+
+function rollDice() {
+
+    const result = document.getElementById("result");
+
+    if (!roundActive) {
+
+        currentChoice = document.getElementById("choice").value;
+
+        point = null;
+
+        roundActive = true;
+    }
+
+    let die1 = Math.floor(Math.random() * 6) + 1;
+
+    let die2 = Math.floor(Math.random() * 6) + 1;
+
+    let total = die1 + die2;
+
+    const faces = ["", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+
+    document.getElementById("dice").textContent =
+        faces[die1] + " " + faces[die2];
+
+    document.getElementById("total").textContent =
+        "Total: " + total;
+
+    // Come-out roll
+
+    if (point === null) {
+
+        if (currentChoice === "pass") {
+
+            if (total === 7 || total === 11) {
+
+                endRound("🎉 Pass Line wins! Come-out roll: " + total);
+                return;
+
+            } else if (total === 2 || total === 3) {
+
+                endRound("Pass Line loses. Come-out roll: " + total);
+                return;
+
+            } else if (total === 12) {
+
+                endRound("Pass Line loses. Come-out roll: 12");
+                return;
+            }
+
+        } else {
+
+            if (total === 2 || total === 3) {
+
+                endRound("🎉 Don't Pass wins! Come-out roll: " + total);
+                return;
+
+            } else if (total === 7 || total === 11) {
+
+                endRound("Don't Pass loses. Come-out roll: " + total);
+                return;
+
+            } else if (total === 12) {
+
+                endRound("It's a push! Come-out roll: 12");
+                return;
+            }
+        }
+
+        point = total;
+
+        document.getElementById("pointDisplay").textContent =
+            "Point: " + point;
+
+        result.textContent =
+            "Point established: " + point + ". Roll again!";
+
+        return;
+    }
+
+    // Point phase
+
+    if (total === point) {
+
+        if (currentChoice === "pass") {
+
+            endRound("🎉 Pass Line wins! Point " + point + " was rolled again.");
+
+        } else {
+
+            endRound("Don't Pass loses! Point " + point + " was rolled again.");
+        }
+
+    } else if (total === 7) {
+
+        if (currentChoice === "pass") {
+
+            endRound("Pass Line loses! Seven was rolled.");
+
+        } else {
+
+            endRound("🎉 Don't Pass wins! Seven was rolled.");
+        }
+
+    } else {
+
+        result.textContent =
+            "No decision yet. Point is " + point + ". Roll again!";
+    }
+}
+
+function endRound(message) {
+
+    roundActive = false;
+
+    point = null;
+
+    document.getElementById("pointDisplay").textContent =
+        "Point: -";
+
+    document.getElementById("result").textContent =
+        message;
+}
+
+function resetGame() {
+
+    point = null;
+
+    roundActive = false;
+
+    document.getElementById("dice").textContent = "🎲 🎲";
+
+    document.getElementById("total").textContent = "Total: -";
+
+    document.getElementById("pointDisplay").textContent = "Point: -";
+
+    document.getElementById("result").textContent =
+        "New round. Click ROLL DICE to begin.";
+}
+
+</script>
+
+</body>
+</html>
+```

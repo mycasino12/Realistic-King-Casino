@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Casino - Dashboard</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:#0b1020;
+ color:white;
+ font-family:Arial;
+}
+
+header{
+ background:#151c30;
+ padding:20px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:12px;
+}
+
+.logo{
+ color:#f4c542;
+ font-size:23px;
+ font-weight:bold;
+}
+
+nav a{
+ color:white;
+ text-decoration:none;
+ margin:8px;
+ display:inline-block;
+}
+
+nav a:hover{color:#f4c542}
+
+.container{
+ max-width:1100px;
+ margin:auto;
+ padding:25px;
+}
+
+.hero{
+ background:linear-gradient(120deg,#252b4b,#151c30);
+ padding:30px;
+ border-radius:18px;
+}
+
+.hero h1{color:#f4c542}
+
+.box{
+ background:#151c30;
+ padding:22px;
+ border-radius:15px;
+ margin:20px 0;
+ border:1px solid #343d59;
+}
+
+.balance{
+ font-size:32px;
+ color:#f4c542;
+ font-weight:bold;
+}
+
+button{
+ background:#f4c542;
+ color:#111;
+ padding:13px 18px;
+ border:0;
+ border-radius:9px;
+ font-weight:bold;
+ cursor:pointer;
+ margin-top:10px;
+}
+
+button:hover{background:#ffda65}
+
+.payment-box{
+ border:2px solid #d6a52e;
+}
+
+.payment-button{
+ background:linear-gradient(120deg,#f4c542,#d99b16);
+ color:#111;
+ font-size:16px;
+}
+
+.small-links a{
+ display:inline-block;
+ margin:8px;
+ color:#f4c542;
+}
+
+footer{
+ text-align:center;
+ padding:25px;
+ color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">👑 KING CASINO</div>
+
+ <nav>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="payment.html">Payment</a>
+  <a href="profile.html">Profile</a>
+  <a href="wallet.html">Wallet</a>
+  <a href="support.html">Support</a>
+ </nav>
+</header>
+
+<div class="container">
+
+ <div class="hero">
+  <h1 id="welcome">Welcome!</h1>
+  <p>Your King Casino player dashboard.</p>
+ </div>
+
+ <!-- PAYMENT SECTION -->
+ <div class="box payment-box">
+  <h2>👑 Account Payment</h2>
+  <p>Complete the payment step and submit your receipt for review.</p>
+  <p id="paymentStatus">Payment status: Not submitted</p>
+
+  <button class="payment-button" onclick="location.href='payment.html'">
+   Continue to Payment
+  </button>
+ </div>
+
+ <!--WALLET -->
+ <div class="box">
+  <h2>Wallet</h2>
+
+  <div class="balance" id="balance">0.00</div>
+
+  <p>Credits only — </p>
+
+  <button onclick="getCredits()">Get Credits</button>
+
+  <p id="creditMessage"></p>
+ </div>
+
+ <!-- SELECTED GAME -->
+ <div class="box" id="continueBox" style="display:none">
+  <h2>Continue Your Selected Game</h2>
+
+  <p id="selectedGameText"></p>
+
+  <button onclick="continueGame()">Continue</button>
+ </div>
+
+ <!-- GAMING LOBBY -->
+ <div class="box">
+  <h2>Gaming Lobby</h2>
+
+  <p>Complete payment and wait for approval before entering the games.</p>
+
+  <button onclick="openGames()">Enter Gaming Lobby</button>
+ </div>
+
+ <!-- ACCOUNT -->
+ <div class="box">
+  <h2>Account</h2>
+
+  <div class="small-links">
+   <a href="profile.html">My Profile</a>
+   <a href="wallet.html">Wallet</a>
+   <a href="transactions.html">Transactions</a>
+   <a href="promotions.html">Promotions</a>
+   <a href="support.html">Support</a>
+  </div>
+ </div>
+
+ <button onclick="logout()">Logout</button>
+
+</div>
+
+<footer>Realistic King Casino </footer>
+
+<script>
+
+// PLAYER NAME
+const username =
+ localStorage.getItem("casinoUsername") || "Guest";
+
+document.getElementById("welcome").textContent =
+ "Welcome back, " + username + "!";
+
+// Wallet BALANCE
+if(localStorage.getItem("casinoBalance") === null){
+ localStorage.setItem("casinoBalance","0");
+}
+
+function updateBalance(){
+
+ let balance = Number(
+  localStorage.getItem("casinoBalance") || 0
+ );
+
+ document.getElementById("balance").textContent =
+  balance.toLocaleString(undefined,{
+   minimumFractionDigits:2,
+   maximumFractionDigits:2
+  });
+}
+
+updateBalance();
+
+// GET CREDITS
+function getCredits(){
+
+ let balance = Number(
+  localStorage.getItem("casinoBalance") || 0
+ );
+
+ balance += 1000;
+
+ localStorage.setItem(
+  "casinoBalance",
+  balance.toString()
+ );
+
+ updateBalance();
+
+ document.getElementById("creditMessage").textContent =
+  "1,000 demo credits added.";
+}
+
+// PAYMENT STATUS
+function isPaymentApproved(){
+
+ return localStorage.getItem("casinoPaymentStatus") === "approved";
+}
+
+function updatePaymentStatus(){
+
+ let status = localStorage.getItem("casinoPaymentStatus");
+
+ if(status === "approved"){
+  document.getElementById("paymentStatus").textContent =
+   "Payment status: Approved";
+ }
+ else if(status === "pending"){
+  document.getElementById("paymentStatus").textContent =
+   "Payment status: Receipt submitted — awaiting review";
+ }
+ else if(status === "rejected"){
+  document.getElementById("paymentStatus").textContent =
+   "Payment status: Rejected — please contact support";
+ }
+ else{
+  document.getElementById("paymentStatus").textContent =
+   "Payment status: Not submitted";
+ }
+}
+
+updatePaymentStatus();
+
+// SELECTED GAME
+const game = localStorage.getItem("selectedGame");
+const gamePath = localStorage.getItem("selectedGamePath");
+
+if(game && gamePath){
+
+ document.getElementById("continueBox").style.display = "block";
+
+ document.getElementById("selectedGameText").textContent =
+  "You selected " + game + ".";
+}
+
+// CONTINUE SELECTED GAME
+function continueGame(){
+
+ if(!isPaymentApproved()){
+  alert("Please complete payment and wait for approval before playing.");
+  location.href = "payment.html";
+  return;
+ }
+
+ if(gamePath){
+  location.href = gamePath;
+ }
+}
+
+// OPEN GAMING LOBBY
+function openGames(){
+
+ if(!isPaymentApproved()){
+  alert("Please complete payment and wait for approval before accessing games.");
+  location.href = "payment.html";
+  return;
+ }
+
+ location.href = "games.html";
+}
+
+// LOGOUT
+function logout(){
+
+ localStorage.setItem("casinoLoggedIn","false");
+
+ location.href = "login.html";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,388 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Casino - Blackjack</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #0b1020;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+header {
+    background: #151c30;
+    padding: 20px;
+    border-bottom: 2px solid gold;
+}
+
+.logo {
+    color: #f4c542;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 750px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.box {
+    background: #151c30;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #343d59;
+    margin-bottom: 20px;
+}
+
+.table {
+    background: #075b38;
+    padding: 25px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.cards {
+    font-size: 35px;
+    min-height: 65px;
+    margin: 15px;
+}
+
+.card {
+    display: inline-block;
+    background: white;
+    color: #111;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 5px;
+    min-width: 45px;
+}
+
+.red {
+    color: red;
+}
+
+button {
+    background: #f4c542;
+    color: #111;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 8px;
+}
+
+button:hover {
+    background: #ffe17b;
+}
+
+button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+#result {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 20px;
+    color: gold;
+    min-height: 30px;
+}
+
+a {
+    color: #f4c542;
+    margin: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">👑 KING CASINO - BLACKJACK</div>
+</header>
+
+<div class="container">
+
+<div class="box">
+
+<h2>🃏 Blackjack Table</h2>
+
+<button id="startButton" onclick="startGame()">
+START GAME
+</button>
+
+<div class="table">
+
+<h3>Dealer</h3>
+
+<div class="cards" id="dealerCards">
+Cards will appear here
+</div>
+
+<p id="dealerScore">Score: -</p>
+
+<hr>
+
+<h3>You</h3>
+
+<div class="cards" id="playerCards">
+Cards will appear here
+</div>
+
+<p id="playerScore">Score: -</p>
+
+</div>
+
+<button id="hitButton" onclick="hit()" disabled>
+HIT
+</button>
+
+<button id="standButton" onclick="stand()" disabled>
+STAND
+</button>
+
+<div id="result">
+Click START GAME to begin!
+</div>
+
+</div>
+
+<div class="box">
+
+<button onclick="location.href='dashboard.html'">
+DASHBOARD
+</button>
+
+<button onclick="location.href='games.html'">
+GAMES LOBBY
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+let deck = [];
+let playerHand = [];
+let dealerHand = [];
+let playing = false;
+
+function createDeck() {
+
+    const suits = ["♠", "♥", "♦", "♣"];
+
+    const values = [
+        "A", "2", "3", "4", "5", "6", "7",
+        "8", "9", "10", "J", "Q", "K"
+    ];
+
+    deck = [];
+
+    for (let suit of suits) {
+
+        for (let value of values) {
+
+            deck.push({
+                value,
+                suit
+            });
+        }
+    }
+
+    // Shuffle the deck
+
+    for (let i = deck.length - 1; i > 0; i--) {
+
+        let j = Math.floor(Math.random() * (i + 1));
+
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+}
+
+function drawCard() {
+
+    return deck.pop();
+}
+
+function handValue(hand) {
+
+    let total = 0;
+    let aces = 0;
+
+    for (let card of hand) {
+
+        if (card.value === "A") {
+
+            total += 11;
+            aces++;
+
+        } else if (["K", "Q", "J"].includes(card.value)) {
+
+            total += 10;
+
+        } else {
+
+            total += Number(card.value);
+        }
+    }
+
+    while (total > 21 && aces > 0) {
+
+        total -= 10;
+        aces--;
+    }
+
+    return total;
+}
+
+function showCards() {
+
+    document.getElementById("playerCards").innerHTML =
+        playerHand.map(card => {
+
+            let color =
+                (card.suit === "♥" || card.suit === "♦")
+                ? "red"
+                : "";
+
+            return '<span class="card ' + color + '">' +
+                card.value + card.suit +
+                '</span>';
+
+        }).join("");
+
+    document.getElementById("dealerCards").innerHTML =
+        dealerHand.map(card => {
+
+            let color =
+                (card.suit === "♥" || card.suit === "♦")
+                ? "red"
+                : "";
+
+            return '<span class="card ' + color + '">' +
+                card.value + card.suit +
+                '</span>';
+
+        }).join("");
+
+    document.getElementById("playerScore").textContent =
+        "Score: " + handValue(playerHand);
+
+    document.getElementById("dealerScore").textContent =
+        "Score: " + handValue(dealerHand);
+}
+
+function startGame() {
+
+    if (playing) return;
+
+    createDeck();
+
+    playerHand = [drawCard(), drawCard()];
+    dealerHand = [drawCard(), drawCard()];
+
+    playing = true;
+
+    document.getElementById("startButton").disabled = true;
+
+    document.getElementById("hitButton").disabled = false;
+
+    document.getElementById("standButton").disabled = false;
+
+    document.getElementById("result").textContent =
+        "Your turn! Hit or Stand.";
+
+    showCards();
+
+    if (handValue(playerHand) === 21) {
+
+        stand();
+    }
+}
+
+function hit() {
+
+    if (!playing) return;
+
+    playerHand.push(drawCard());
+
+    showCards();
+
+    if (handValue(playerHand) > 21) {
+
+        finishGame("You busted! Dealer wins.");
+
+    } else if (handValue(playerHand) === 21) {
+
+        stand();
+    }
+}
+
+function stand() {
+
+    if (!playing) return;
+
+    while (handValue(dealerHand) < 17) {
+
+        dealerHand.push(drawCard());
+    }
+
+    let playerScore = handValue(playerHand);
+    let dealerScore = handValue(dealerHand);
+
+    if (playerScore > 21) {
+
+        finishGame("You busted! Dealer wins.");
+
+    } else if (dealerScore > 21) {
+
+        finishGame("Dealer busted! Round complete.");
+
+    } else if (playerScore > dealerScore) {
+
+        finishGame("Your score is higher! Round complete.");
+
+    } else if (playerScore === dealerScore) {
+
+        finishGame("It's a tie! Round complete.");
+
+    } else {
+
+        finishGame("Dealer's score is higher! Round complete.");
+    }
+}
+
+function finishGame(message) {
+
+    playing = false;
+
+    document.getElementById("hitButton").disabled = true;
+
+    document.getElementById("standButton").disabled = true;
+
+    document.getElementById("startButton").disabled = false;
+
+    document.getElementById("result").textContent =
+        message + " Dealer: " + handValue(dealerHand) +
+        " | You: " + handValue(playerHand);
+
+    showCards();
+}
+
+</script>
+
+</body>
+</html>

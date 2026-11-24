@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>King Casino - Payment</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:#0b1020;
+ color:white;
+ font-family:Arial,sans-serif;
+}
+
+header{
+ background:#151c30;
+ padding:20px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:12px;
+}
+
+.logo{
+ color:#f4c542;
+ font-size:23px;
+ font-weight:bold;
+}
+
+nav a{
+ color:white;
+ text-decoration:none;
+ margin:8px;
+}
+
+nav a:hover{color:#f4c542}
+
+.container{
+ max-width:700px;
+ margin:auto;
+ padding:25px;
+}
+
+h1,h2{
+ color:#f4c542;
+ text-align:center;
+}
+
+.box{
+ background:#151c30;
+ border:1px solid #343d59;
+ border-radius:15px;
+ padding:22px;
+ margin:20px 0;
+ text-align:center;
+}
+
+.gold{
+ background:linear-gradient(120deg,#f4c542,#d99b16);
+ color:#111;
+ padding:14px 20px;
+ border:0;
+ border-radius:9px;
+ font-weight:bold;
+ cursor:pointer;
+ display:inline-block;
+ margin:10px 0;
+}
+
+.gold:hover{background:#ffe17b}
+
+.telegram{
+ background:#229ED9;
+ color:white;
+ padding:14px 20px;
+ border-radius:9px;
+ text-decoration:none;
+ display:inline-block;
+ font-weight:bold;
+ margin-top:12px;
+}
+
+.qr{
+ width:100%;
+ max-width:400px;
+ background:white;
+ padding:10px;
+ border-radius:10px;
+}
+
+#receiptPreview{
+ display:none;
+ width:100%;
+ max-width:350px;
+ margin:20px auto;
+ border-radius:10px;
+}
+
+#receiptMessage{
+ color:#f4c542;
+}
+
+input[type=file]{
+ display:none;
+}
+
+.codeInput{
+ width:220px;
+ padding:15px;
+ border-radius:10px;
+ border:2px solid #f4c542;
+ background:#0b1020;
+ color:white;
+ font-size:24px;
+ text-align:center;
+ letter-spacing:8px;
+ margin:15px auto;
+}
+
+.codeInput:focus{
+ outline:2px solid #ffe17b;
+}
+
+.modal{
+ display:none;
+ position:fixed;
+ z-index:1000;
+ left:0;
+ top:0;
+ width:100%;
+ height:100%;
+ background:rgba(0,0,0,0.8);
+ justify-content:center;
+ align-items:center;
+ padding:15px;
+}
+
+.modal-content{
+ background:#151c30;
+ border:2px solid #f4c542;
+ border-radius:15px;
+ padding:25px;
+ width:100%;
+ max-width:420px;
+ text-align:center;
+}
+
+.close-button{
+ background:#343d59;
+ color:white;
+ padding:10px 18px;
+ border:0;
+ border-radius:8px;
+ cursor:pointer;
+ margin-top:10px;
+}
+
+#codeMessage{
+ margin-top:15px;
+ font-weight:bold;
+}
+
+footer{
+ text-align:center;
+ padding:25px;
+ color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">👑 KING CASINO</div>
+
+ <nav>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="payment.html">Payment</a>
+ </nav>
+</header>
+
+<div class="container">
+
+ <h1>Payment Center</h1>
+
+ <p style="text-align:center;color:#bbb">
+  Payment and access verification.
+ </p>
+
+ <!-- QR SECTION -->
+ <div class="box">
+
+  <h2>Scan Me</h2>
+
+  <p>This QR section is for Coin display only.</p>
+
+  <img
+   src="coin.jpeg"
+   alt="Bitcoin QR image"
+   class="qr"
+  >
+
+  <p style="color:#f4c542;font-weight:bold">
+   Cheek Address well before you Proceed.
+  </p>
+
+ </div>
+
+ <!-- RECEIPT PREVIEW SECTION -->
+ <div class="box">
+
+  <h2> Image Preview</h2>
+
+  <p>Please upload clear photos of your payment cards, such as Apple gift Cards or any other gift cards.</p>
+
+  <button class="gold" onclick="showReceiptBox()">
+   📁 Upload Photo of the payment image.
+  </button>
+
+  <img id="receiptPreview" alt="Receipt image preview">
+
+  <p id="receiptMessage"></p>
+
+  <a
+   class="telegram"
+   href="https://t.me/Official_x546"
+   target="_blank"
+   rel="noopener"
+  >
+   Contact Admin on Telegram
+  </a>
+
+  <p style="color:#aaa;font-size:13px">
+   This Board does not transmit or store uploaded images. please contact the telegram and send in same image and wait for the activation code.
+  </p>
+
+ </div>
+
+ <!-- CODE VERIFICATION -->
+ <div class="box">
+
+  <h2>4-Digit Access Code</h2>
+
+  <p>
+   Enter the Activation codes to continue to your selected game.
+  </p>
+
+  <input
+   type="text"
+   id="accessCode"
+   class="codeInput"
+   maxlength="4"
+   inputmode="numeric"
+   autocomplete="off"
+   placeholder="0000"
+  >
+
+  <br>
+
+  <button class="gold" onclick="verifyCode()">
+   Verify Code
+  </button>
+
+  <p id="codeMessage"></p>
+
+ </div>
+
+</div>
+
+<!-- RECEIPT MESSAGE BOX -->
+<div class="modal" id="receiptModal">
+
+ <div class="modal-content">
+
+  <h2>Upload Your Image</h2>
+
+  <p>
+   Select an image from your gallery or computer.
+  </p>
+
+  <label for="receipt" class="gold">
+   Choose Image
+  </label>
+
+  <input
+   type="file"
+   id="receipt"
+   accept="image/*"
+   onchange="previewReceipt(event)"
+  >
+
+  <br>
+
+  <button
+   class="close-button"
+   onclick="closeReceiptBox()"
+  >
+   Cancel
+  </button>
+
+ </div>
+
+</div>
+
+<footer>
+ Realistic King Casino — Website
+</footer>
+
+<script>
+
+// TEST CODES
+const validCodes = [
+ "2222",
+ "4343",
+ "6543",
+ "8758",
+ "8464",
+ "9374",
+ "1123"
+];
+
+// SHOW IMAGE UPLOAD BOX
+function showReceiptBox(){
+
+ document.getElementById("receiptModal").style.display =
+  "flex";
+
+}
+
+// CLOSE IMAGE UPLOAD BOX
+function closeReceiptBox(){
+
+ document.getElementById("receiptModal").style.display =
+  "none";
+
+}
+
+// PREVIEW IMAGE LOCALLY
+function previewReceipt(event){
+
+ const file = event.target.files[0];
+
+ if(!file) return;
+
+ if(!file.type.startsWith("image/")){
+  alert("Please select an image file.");
+  return;
+ }
+
+ if(file.size > 5 * 1024 * 1024){
+  alert("Please select an image smaller than 5MB.");
+  event.target.value = "";
+  return;
+ }
+
+ const reader = new FileReader();
+
+ reader.onload = function(e){
+
+  document.getElementById("receiptPreview").src =
+   e.target.result;
+
+  document.getElementById("receiptPreview").style.display =
+   "block";
+
+  document.getElementById("receiptMessage").textContent =
+   "Image preview loaded.";
+
+  closeReceiptBox();
+
+ };
+
+ reader.readAsDataURL(file);
+
+}
+
+// VERIFY TEST CODE
+function verifyCode(){
+
+ const code =
+  document.getElementById("accessCode").value.trim();
+
+ const message =
+  document.getElementById("codeMessage");
+
+ if(!/^\d{4}$/.test(code)){
+  message.style.color="#ff8080";
+  message.textContent="Please enter a 4-digit code.";
+  return;
+ }
+
+ if(validCodes.includes(code)){
+
+  message.style.color="#4ade80";
+  message.textContent="Demo code accepted.";
+
+  // Remember demo verification
+  localStorage.setItem("casinoPaymentStatus","approved");
+
+  // GET SELECTED GAME
+  const gamePath =
+   localStorage.getItem("selectedGamePath");
+
+  setTimeout(function(){
+
+   if(gamePath){
+    location.href=gamePath;
+   }else{
+    location.href="games.html";
+   }
+
+  },1000);
+
+ }else{
+
+  message.style.color="#ff8080";
+  message.textContent="Invalid code. Please try again.";
+
+ }
+
+}
+
+</script>
+
+</body>
+</html>
