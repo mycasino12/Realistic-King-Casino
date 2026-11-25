@@ -103,6 +103,101 @@ footer{
  padding:25px;
  color:#aaa;
 }
+
+/* LIVE PLAYERS FEATURE */
+.live-players{
+ background:#151c30;
+ padding:22px;
+ border-radius:15px;
+ margin:20px 0;
+ border:1px solid #343d59;
+}
+
+.live-players-header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:12px;
+ margin-bottom:20px;
+}
+
+.live-players-header h2{
+ color:#f4c542;
+ margin:0;
+}
+
+.online-count{
+ background:#123522;
+ color:#4ade80;
+ padding:9px 14px;
+ border-radius:20px;
+ font-size:13px;
+ font-weight:bold;
+}
+
+.live-player-list{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:15px;
+}
+
+.live-player-card{
+ display:flex;
+ align-items:center;
+ gap:12px;
+ background:#0b1020;
+ padding:12px;
+ border-radius:12px;
+ border:1px solid #26334a;
+}
+
+.live-player-avatar{
+ position:relative;
+ width:58px;
+ height:58px;
+ flex-shrink:0;
+}
+
+.live-player-avatar img{
+ width:58px;
+ height:58px;
+ object-fit:cover;
+ border-radius:50%;
+ border:2px solid #343d59;
+}
+
+.online-dot{
+ position:absolute;
+ bottom:3px;
+ right:3px;
+ width:13px;
+ height:13px;
+ background:#22c55e;
+ border:2px solid #0b1020;
+ border-radius:50%;
+}
+
+.live-player-info{
+ display:flex;
+ flex-direction:column;
+ gap:5px;
+}
+
+.live-player-name{
+ color:white;
+ font-weight:bold;
+}
+
+.live-player-status{
+ font-size:12px;
+ color:#22c55e;
+}
+
+.live-player-status span{
+ color:#22c55e;
+}
+
 </style>
 </head>
 
@@ -167,6 +262,100 @@ footer{
   <p>Complete payment and wait for approval before entering the games.</p>
 
   <button onclick="openGames()">Enter Gaming Lobby</button>
+ </div>
+
+ <!-- LIVE PLAYERS SECTION -->
+ <div class="live-players">
+
+  <div class="live-players-header">
+   <h2>🟢 Live Players</h2>
+
+   <span class="online-count">
+    <span id="onlineCount">128</span> Players Online
+   </span>
+  </div>
+
+  <div class="live-player-list">
+
+   <!-- PLAYER 1 -->
+   <div class="live-player-card">
+    <div class="live-player-avatar">
+     <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80" alt="Alex Morgan profile">
+     <span class="online-dot"></span>
+    </div>
+
+    <div class="live-player-info">
+     <span class="live-player-name">Alex Morgan</span>
+     <span class="live-player-status">● Online</span>
+    </div>
+   </div>
+
+   <!-- PLAYER 2 -->
+   <div class="live-player-card">
+    <div class="live-player-avatar">
+     <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Sophia Williams profile">
+     <span class="online-dot"></span>
+    </div>
+
+    <div class="live-player-info">
+     <span class="live-player-name">Sophia Williams</span>
+     <span class="live-player-status">● Online</span>
+    </div>
+   </div>
+
+   <!-- PLAYER 3 -->
+   <div class="live-player-card">
+    <div class="live-player-avatar">
+     <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=150&q=80" alt="Daniel Carter profile">
+     <span class="online-dot"></span>
+    </div>
+
+    <div class="live-player-info">
+     <span class="live-player-name">Daniel Carter</span>
+     <span class="live-player-status">● Online</span>
+    </div>
+   </div>
+
+   <!-- PLAYER 4 -->
+   <div class="live-player-card">
+    <div class="live-player-avatar">
+     <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=150&q=80" alt="Emma Johnson profile">
+     <span class="online-dot"></span>
+    </div>
+
+    <div class="live-player-info">
+     <span class="live-player-name">Emma Johnson</span>
+     <span class="live-player-status">● Online</span>
+    </div>
+   </div>
+
+   <!-- PLAYER 5 -->
+   <div class="live-player-card">
+    <div class="live-player-avatar">
+     <img src="https://images.unsplash.com/photo-1507591064344-4c6ce005b128?auto=format&fit=crop&w=150&q=80" alt="Ryan Cooper profile">
+     <span class="online-dot"></span>
+    </div>
+
+    <div class="live-player-info">
+     <span class="live-player-name">Ryan Cooper</span>
+     <span class="live-player-status">● Online</span>
+    </div>
+   </div>
+
+   <!-- PLAYER 6 -->
+   <div class="live-player-card">
+    <div class="live-player-avatar">
+     <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=150&q=80" alt="Olivia James profile">
+     <span class="online-dot"></span>
+    </div>
+
+    <div class="live-player-info">
+     <span class="live-player-name">Olivia James</span>
+     <span class="live-player-status">● Online</span>
+    </div>
+   </div>
+
+  </div>
  </div>
 
  <!-- ACCOUNT -->
@@ -304,6 +493,22 @@ function openGames(){
 
  location.href = "games.html";
 }
+
+// LIVE PLAYER COUNTER (SIMULATED)
+let onlinePlayers = 128;
+
+setInterval(function(){
+
+ onlinePlayers += Math.floor(Math.random() * 5) - 2;
+
+ if(onlinePlayers < 100){
+  onlinePlayers = 100;
+ }
+
+ document.getElementById("onlineCount").textContent =
+  onlinePlayers;
+
+},5000);
 
 // LOGOUT
 function logout(){
